@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package customerFile;
+
+service customer{
+    rpc CreateCustomer(CustomerDetails) returns(CustomerDetails) {}
+
+    rpc CustomerLogin(CustomerDetails) returns(CustomerDetails) {}
+
+    rpc GetRestaurantsDetails(Location) returns(stream RestaurantDetails) {}
+
+    rpc getRestaurantMenu(RestaurantId) returns(stream ItemDetails) {}
+
+    rpc AddItemToCart(ItemDetails) returns(ItemDetails) {}
+
+    rpc RemoveItemFromCart(ItemId) returns(ItemDetails) {}
+
+    rpc PlaceOrder(OrderDetails) returns(OrderDetails) {}
+
+    // rpc UpdateOrderStatus(OrderDetails) returns(OrderDetails) {}  //move to owner and deliveryGuy
+
+    rpc RateDeliveryGuy(OrderId) returns(OrderDetails) {} //orderid
+
+    rpc RateRestaurant(OrderDetails) returns(OrderDetails) {}
+
+    rpc GetOrdersHistory(CustomerId) returns(stream OrderDetails) {} 
+}
+
+message ItemId{
+    int32 Itemm_id=1;
+}
+message CustomerDetails{
+    int32 Customer_id=1;
+    string Name=2;           	  
+    int64 Mobile=3;           	  	
+    string Email=4;             	 
+    double Current_location_lat=5;  
+    double Current_location_long=6;
+    string password=7;
+}
+message Location{
+    double latitude=1;
+    double longitude=2;
+}
+message time{
+    int32 hours=1;
+    int32 minutes=2;
+    bool isAM=3;
+}
+message RestaurantDetails{
+    int32 Restaurant_id=1;
+    string Restaurant_name=2;
+    int32 Rating=3;		
+    double Location_lat	=4;
+    double Location_long=5;
+    string Description=6;
+    string Image_link=7;		
+    time open_timings=8;	
+    time Close_timings=9;	
+
+}
+
+message ItemDetails{
+    int32 ItemId=1;
+    int32 Item_name=2;			
+    int32 Price=3;				
+    int32 Rating=4;			
+    string Description=5;			
+    string Description=6;			
+    string Image_link=7;			
+    bool Is_availible=8;		
+    int32 Restaurant_id=9;
+}
+
+message OrderDetails{
+    int32 Order_id=1;			
+    int32 Customer_id=2;		    
+    int32 Restaurant_id=3;	
+    int32 Delivery_guy_id=4;   	
+    enum OrderStatus {
+        ISCONFIRMED = 0; // default status
+        DELIVERY_GUY_ASSSIGNED = 2;
+        OUT_FOR_DELIVERY=3;
+        DELIVERED=4;
+    }		
+    double Restaurant_rating=6; 	
+    double Driver_rating=7;		
+
+}
+message OrderId{
+    int32 Order_id=1;
+}
+message RestaurantId{
+    int32 Restaurant_id=1;
+}
+message CustomerId{
+    int32 Customer_id=1;
+}
+
+
+
+
+// /*
+// email to restaurant
+// assign delivery guy to order
+// add order details to order table
+
+// */
+
+// create a table with 
+// customerId 
+// ItemId
+// quantity
+// orderId 

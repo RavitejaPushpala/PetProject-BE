@@ -1,0 +1,66 @@
+
+syntax = "proto3";
+
+package adminFile;
+
+service admin
+{
+
+    rpc CreateAdmin(AdminDetails) returns(AdminDetails) {}
+
+    rpc AdminLogin(AdminDetails) returns(AdminDetails) {}
+
+    rpc GetRestaurantsYetToBeVerified(Empty) returns(stream RestaurantId) {}
+
+    rpc VerifyRestaurant(IdsOfRestaurantAndAdmin) returns(IdsOfRestaurantAndAdmin) {};
+
+    rpc GetRestaurantOwnerDocs(RestaurantId)  returns(RestaurantOwnerDocs) {};
+    
+    rpc GetDeliveryGuysYetToBeVerified(Empty) returns(stream DeliveryGuyId) {}
+
+    rpc VerifyDeliveryGuy(IdsOfDeliveryGuyAndAdmin) returns(IdsOfDeliveryGuyAndAdmin) {};
+
+    rpc GetDeliveryGuyDocs(DeliveryGuyId)  returns(DeliveryGuyDocs) {};
+}
+
+message Empty{}
+
+message AdminDetails{
+    int32 Admin_Id=1;       
+    string Name=2;           
+    int64 Mobile=3;         
+    string Email=4;     
+    string password=5;
+}
+message RestaurantId{
+    int32 Restaurant_id=1;
+}
+
+message IdsOfRestaurantAndAdmin{
+    int32 Restaurant_id=1;
+    int32 admin_id=2;
+}
+
+
+message RestaurantOwnerDocs{
+    int32 Doc_id=1;
+    string FSSAI_license=2;
+    string Pan_copy=3;
+    string Bank_details=4;
+    string Restaurant_id=5;
+}
+message IdsOfDeliveryGuyAndAdmin{
+    int32 Delivery_guy_id=1;
+    int32 admin_id=2;
+}
+message DeliveryGuyId{
+    int32 Delivery_guy_id=1;
+}
+
+message DeliveryGuyDocs{
+    int32 Doc_id=1;
+    string Bike_license=2;
+    string Aadhar_copy=3;
+    string Pan_copy=4;
+    string Delivery_guy_id=5;
+}

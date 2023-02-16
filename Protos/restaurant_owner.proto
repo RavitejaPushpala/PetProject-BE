@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package ownerFile;
+
+service owner{
+
+    rpc CreateRestaurantOwner(RestaurantOwnerDetails) returns(RestaurantOwnerDetails) {}
+
+    rpc RestaurantOwnerLogin(RestaurantOwnerDetails) returns(RestaurantOwnerDetails) {}
+
+    rpc AddRestaurant(RestaurantDetails) returns(RestaurantDetails) {}
+    
+    rpc AddOwnerDocs(RestaurantOwnerDocs) returns(RestaurantOwnerDocs) {}
+
+    rpc ModifyRestaurantDetails(RestaurantDetails) returns(RestaurantDetails) {}
+
+    rpc AddItemsToMenu(ItemDetails) returns(ItemDetails) {}
+
+    rpc DeleteItemsInMenu(ItemId) returns(ItemId) {} 
+
+    rpc ModifyItemsInMenu(ItemDetails) returns(ItemDetails) {}
+    
+    rpc GetOrdersDetails(RestaurantId) returns(stream OrderDetails) {}
+
+    rpc SearchForDeliveryGuyAndAssignOrder(OrderDetails) returns(OrderDetails) {}
+
+    rpc UpdateOrderStatus(OrderDetails) returns(OrderDetails) {}
+
+}
+
+message RestaurantOwnerDetails{
+    int32 Owner_id=1;
+    string Name=2;              
+    int64 Mobile=3;              
+    string Email=4;   
+    string password=5;             
+}
+message RestaurantOwnerDocs{
+    int32 Owner_id=1;
+    string FSSAI_license=1;
+    string Pan_copy=1;
+    string Bank_details=1;
+    string FSSAI_license=1;
+}
+message time{
+    int32 hours=1;
+    int32 minutes=2;
+    bool isAM=3;
+}
+message RestaurantDetails{
+    int32 Restaurant_id=1;
+    string Restaurant_name=2;
+    int32 Rating=3;	
+    int32 No_of_ratings=10;		
+    double Location_lat	=4;
+    double Location_long=5;
+    string Description=6;
+    string Image_link=7;		
+    time open_timings=8;	
+    time Close_timings=9;	
+}
+
+message ItemDetails{
+    int32 ItemId=1;
+    int32 Item_name=2;			
+    int32 Price=3;				
+    int32 Rating=4;			
+    string Description=5;			
+    string Image_link=6;			
+    bool Is_availible=7;		
+    int32 Restaurant_id=8;
+}
+message ItemId{
+    int32 ItemId=1;
+}
+message RestaurantId{
+    int32 Restaurant_id=1;
+}
+
+message OrderDetails{
+    int32 Order_id=1;			
+    int32 Customer_id=2;		    
+    int32 Restaurant_id=3;	
+    int32 Delivery_guy_id=4;   	
+    enum OrderStatus {
+        ISCONFIRMED = 0; 
+        DELIVERY_GUY_ASSSIGNED = 2;
+        OUT_FOR_DELIVERY=3;
+        DELIVERED=4;
+    }		
+    double Restaurant_rating=6; 	
+    double Driver_rating=7;		
+}

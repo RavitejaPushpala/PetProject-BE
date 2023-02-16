@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package deliveryGuyFile;
+
+service deliveryGuy{
+    rpc CreateDeliveryGuy(DeliveryGuyDetails) returns(DeliveryGuyDetails) {}
+
+    rpc DeliveryGuyLogin(DeliveryGuyDetails) returns(DeliveryGuyDetails) {}
+
+    rpc AddDeliveryGuyDocs(DeliveryGuyDocs) returns(DeliveryGuyDocs) {}
+
+    rpc getOrdersDetailsForDeliveryGuy(DeliveryGuyId) returns(OrderDetails) {}
+
+    rpc UpdateOrderStatus(OrderDetails) returns(OrderDetails) {}
+    
+}
+
+message DeliveryGuyDetails{
+    int32 Delivery_guy_Id=1; 
+    string Name=2;            
+    int64 Mobile=3;          
+    string Email=4;             
+    bool Is_verified_by_admin=5;
+    int32 Verified_by=6;		 	
+    int32 OTP=7;				 
+    enum DeliveryGusStatus {
+        ISAVAILIBLE = 0; 
+        WORKING_ON_ORDER = 1;
+    };
+    double Current_location_lat=9;
+    double Current_location_long=10;
+    double Rating=12;			
+    int32 No_of_ratings=13; 	
+    string Password=14;
+}
+
+message DeliveryGuyDocs{
+    int32 Doc_id=1;       	
+    string Bilke_license=2;   
+    string Aadhar_copy=3;     
+    string Pan_copy=4;        
+    int32 DeliveryGuy_id=5;    
+}
+
+message OrderDetails{
+    int32 Order_id=1;			
+    int32 Customer_id=2;		    
+    int32 Restaurant_id=3;	
+    int32 Delivery_guy_id=4;   	
+    enum OrderStatus {
+        ISCONFIRMED = 0; 
+        DELIVERY_GUY_ASSSIGNED = 2;
+        OUT_FOR_DELIVERY=3;
+        DELIVERED=4;
+    }		
+    double Restaurant_rating=6; 	
+    double Driver_rating=7;		
+
+}
